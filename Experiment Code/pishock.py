@@ -172,5 +172,5 @@ fname = input("Insert filename: ")
 print(log)
 with open(fname, 'w', newline='') as f:
     w = csv.writer(f)
-    w.writerows(threshold.items())
+    w.writerows(log.items())
 print("Session logged to csv")
