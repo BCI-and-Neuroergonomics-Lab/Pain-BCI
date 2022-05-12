@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 from PyPav2 import Pavlok
+import configparser
 import numpy as np
 import random
 import socket
 import time
 import csv
+import os
 import automationhat
 time.sleep(0.1) # Short pause after ads1015 class creation recommended
 p = Pavlok()
 time.sleep(3)  # short pause for Pavlok handshake
 print("Pavlok connected")
+
+ID = input("Insert subject ID: ")
+path = os.path.dirname(os.path.realpath(__file__))  # get local directory
 
 
 def sendOVstim(ID, sock, t=None, f=4):
@@ -36,9 +41,13 @@ and timing parameters that should be tuned before data collection.
 
 Also generates randomized trial list.
 """
+configParser = configparser.RawConfigParser()
+config = os.path.join(path, ID + ".cfg")
+configParser.read(config)  # load config file
+
 threshold = {  # stimulus thresholds, determined ahead of time
-    's': 6,
-    'v': 6
+    's': configParser.get('subject-thresholding', 'shock'),  # read from config
+    'v': 6  # currently hard-coded at 6
 }
 stims = ['s', 'v', 'n']
 duration = 0.3  # vibration duration, seconds
