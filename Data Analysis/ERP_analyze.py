@@ -1,5 +1,5 @@
+import os
 import mne
-import string
 import channels
 
 stims = {
@@ -9,16 +9,15 @@ stims = {
     '32775': 'OVTK_StimulationId_BaselineStart'
 }
 
-montage = mne.channels.make_standard_montage('standard_1020')
-fnames = ["C:/Users\zatraylo\PycharmProjects\Pain-BCI\Experiment Code\Data\sub1\sub1-attend-1.gdf",
-          "C:/Users\zatraylo\PycharmProjects\Pain-BCI\Experiment Code\Data\sub1\sub1-attend-2.gdf",
-          "C:/Users\zatraylo\PycharmProjects\Pain-BCI\Experiment Code\Data\sub1\sub1-attend-3.gdf",
-          "C:/Users\zatraylo\PycharmProjects\Pain-BCI\Experiment Code\Data\sub1\sub1-attend-4.gdf",
-          "C:/Users\zatraylo\PycharmProjects\Pain-BCI\Experiment Code\Data\sub1\sub1-attend-5.gdf",
-          "C:/Users\zatraylo\PycharmProjects\Pain-BCI\Experiment Code\Data\sub1\sub1-attend-6.gdf"]
+# Establish paths for raw GDF files based on subject and condition of interest
+data_path = os.path.dirname(os.path.realpath(__file__))[:-13] + "Experiment Code\\Data"  # path to GDF files
+subject = "sub1"  # format is sub# (1-N)
+condition = "attend"  # or distract
+fnames = [data_path + "\\" + subject + "\\" + subject + "-" + condition + "-" + str(i+1) + ".gdf" for i in range(6)]
 
 amp_order = sum([channels.labels["UB20160321"], channels.labels["UB20141008"],  # order amplifiers as OpenViBE did
                  channels.labels["UB20141007"], channels.labels["UB20110715"]], [])  # (see subject summaries)
+montage = mne.channels.make_standard_montage('standard_1020')
 
 epochs_list = []
 ts = -0.1  # epoch start time
