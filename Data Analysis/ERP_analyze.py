@@ -54,7 +54,10 @@ reject_criteria = dict(eeg=100e-6)  # 100 µV
 _ = epochs_combined.drop_bad(reject=reject_criteria)  # automatically drop epochs based on PPA
 # fig = epochs_combined.plot()  # manually drop epochs and channels
 
+epochs_combined["33285"].average().plot_joint()  # shock
+epochs_combined["33286"].average().plot_joint()  # vibrate
 
+"""  Stop at graphs for now...
 ################
 # Test analysis: First, the example provided by https://neurokit2.readthedocs.io/en/latest/studies/erp_gam.html
 # Selecting relevant channels (somatosensory cortex)
@@ -107,3 +110,4 @@ if h is not None:
     plt.legend((h, ), ('cluster p-value < 0.05', ))
 plt.xlabel("time (ms)")
 plt.ylabel("t-values")
+"""
