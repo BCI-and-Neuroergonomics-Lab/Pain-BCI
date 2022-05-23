@@ -177,8 +177,12 @@ for trial in trials:
 sendOVstim(32770, s, None, 4)  # send marker to OpenViBE (OVTK_GDF_ExperimentStop: 32770)
 
 # Log session to a local file for later reference
-fname = input("Insert filename: ")
+num = input("Insert subject number: ")
+task = input("Insert task letter: ")
+run = input("Insert run number: ")
+fname = "sub-0" + num + "_task-" + task + "_run-0" + run + "_log"
 print(log)
+print(fname)
 with open(fname, 'w', newline='') as f:
     w = csv.writer(f)
     w.writerows(log.items())
