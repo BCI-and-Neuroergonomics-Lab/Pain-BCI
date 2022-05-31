@@ -46,7 +46,7 @@ config = os.path.join(path, ID + ".cfg")
 configParser.read(config)  # load config file
 
 threshold = {  # stimulus thresholds, determined ahead of time
-    's': configParser.get('subject-thresholding', 'shock'),  # read from config
+    's': int(configParser.get('subject-thresholding', 'shock')),  # read from config
     'v': 6  # currently hard-coded at 6
 }
 stims = ['s', 'v', 'n']

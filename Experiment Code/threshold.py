@@ -15,7 +15,7 @@ input("Press any button to elicit initial shock (level 4)...")
 p.shock(4)  # lowest perceptible shock
 
 while True:
-    value = input("Insert value for next shock (1-10): ")
+    value = int(input("Insert value for next shock (1-10): "))
     p.shock(value)
     print("Shocked at " + str(value) + " out of 10")
     end = input("End thresholding? (y/n)")
@@ -27,4 +27,4 @@ while True:
 fname = ID + ".cfg"
 with open(fname, 'w') as f:
     f.write("[subject-thresholding]\n")
-    f.write("shock = " + value + "\n")  # save pain threshold for later
+    f.write("shock = " + str(value) + "\n")  # save pain threshold for later
