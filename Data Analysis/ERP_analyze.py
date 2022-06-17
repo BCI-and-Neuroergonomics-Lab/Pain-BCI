@@ -12,7 +12,7 @@ stims = {
 
 # Establish paths for EDF files based on subject and condition of interest
 data_path = os.path.dirname(os.path.realpath(__file__))[:-13] + os.path.join("Experiment Code", "Data")  # GDF file path
-subjects = ["1", "2"]
+subjects = ["1", "2", "3"]
 condition = "A"  # either Attend or Distract
 
 montage = mne.channels.make_standard_montage('standard_1020')
@@ -36,7 +36,8 @@ for s in subjects:  # collapse across all subjects (still with just 1 condition,
         for event in events:
             event[0] = event[0] - offset
 
-        raw.filter(l_freq=0.1, h_freq=40.0)  # bandpass filter 0.1Hz-40Hz
+        raw.filter(l_freq=1, h_freq=None)  # highpass filter at 1Hz
+        raw.notch_filter(freqs=60)  # notch filter at 60Hz
         epochs_list.append(mne.Epochs(raw, events, event_id=temp_id, tmin=ts, tmax=te,
                                       preload=True, baseline=(None, 0)))  # epoch the data w/ 100ms baseline correction
 
