@@ -83,7 +83,7 @@ labels = {
     ]
 }
 
-subjects = ["sub3"]  # format is sub# (1-N)
+subjects = ["sub4"]  # format is sub# (1-N)
 conditions = ["attend", "distract"]  # both possible attention conditions
 
 # Establish paths for raw GDF files based on subject and condition of interest
