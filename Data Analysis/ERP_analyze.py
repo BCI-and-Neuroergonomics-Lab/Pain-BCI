@@ -12,7 +12,7 @@ stims = {
 
 # Establish paths for EDF files based on subject and condition of interest
 data_path = os.path.dirname(os.path.realpath(__file__))[:-13] + os.path.join("Experiment Code", "Data")  # GDF file path
-subjects = ["1", "2", "3"]
+subjects = ["1", "2", "3", "4", "5"]
 condition = "A"  # either Attend or Distract
 
 montage = mne.channels.make_standard_montage('standard_1020')
@@ -36,7 +36,7 @@ for s in subjects:  # collapse across all subjects (still with just 1 condition,
         for event in events:
             event[0] = event[0] - offset
 
-        raw.filter(l_freq=1, h_freq=None)  # highpass filter at 1Hz
+        raw.filter(l_freq=1, h_freq=40)  # bandpass filter at 1Hz-40Hz
         raw.notch_filter(freqs=60)  # notch filter at 60Hz
         epochs_list.append(mne.Epochs(raw, events, event_id=temp_id, tmin=ts, tmax=te,
                                       preload=True, baseline=(None, 0)))  # epoch the data w/ 100ms baseline correction
@@ -47,12 +47,3 @@ _ = epochs_combined.drop_bad(reject=reject_criteria)  # automatically drop epoch
 
 epochs_combined["33285"].average().plot_joint()  # shock
 epochs_combined["33286"].average().plot_joint()  # vibrate
-"""
-# ICA test
-orig = raw.copy()
-ica = mne.preprocessing.ICA(n_components=20, random_state=97, max_iter=800)
-ica.fit(raw)
-ica.plot_sources(raw, show_scrollbars=False)
-#ica.apply(raw)
-ica.plot_overlay(raw, exclude=ica.exclude)
-"""

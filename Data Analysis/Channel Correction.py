@@ -83,14 +83,14 @@ labels = {
     ]
 }
 
-subjects = ["sub4"]  # format is sub# (1-N)
+subjects = ["sub5"]  # format is sub# (1-N)
 conditions = ["attend", "distract"]  # both possible attention conditions
 
 # Establish paths for raw GDF files based on subject and condition of interest
 data_path = os.path.dirname(os.path.realpath(__file__))[:-13] + os.path.join("Experiment Code", "Data")  # GDF file path
 
-amp_order = sum([labels["UB20160321"], labels["UB20141007"],  # order amplifiers as OpenViBE did
-                 labels["UB20141008"], labels["UB20110715"]], [])  # (see subject summaries)
+amp_order = sum([labels["UB20160321"], labels["UB20141008"],  # order amplifiers as OpenViBE did
+                 labels["UB20141007"], labels["UB20110715"]], [])  # (see subject summaries)
 fnames = []
 
 for s in subjects:
@@ -112,4 +112,5 @@ for s in subjects:
             num = s[-1:]
             task = condition[0].upper()
             BIDS_name = "sub-0" + num + "_task-" + task + "_run-0" + run + "_eeg.edf"
+            print(BIDS_name)
             raw.export(BIDS_name)  # export new .edf file
